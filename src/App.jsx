@@ -1,44 +1,11 @@
-import { useEffect, useState } from "react";
+// src/App.jsx
+import { motion } from "framer-motion";
 import { NewTodoForm } from "./NewTodoForm";
 import { TodoList } from "./TodoList";
-import { motion } from "framer-motion";
+import { useTodoStore } from "./store";
 
 export default function App() {
-  const [todos, setTodos] = useState(() => {
-    const localValue = localStorage.getItem("ITEMS");
-    return localValue ? JSON.parse(localValue) : [];
-  });
-
-  useEffect(() => {
-    localStorage.setItem("ITEMS", JSON.stringify(todos));
-  }, [todos]);
-
-  function addTodo(title) {
-    setTodos((currentTodos) => [
-      ...currentTodos,
-      { id: crypto.randomUUID(), title, completed: false, subtasks: [] },
-    ]);
-  }
-
-  function toggleTodo(id, completed) {
-    setTodos((currentTodos) =>
-      currentTodos.map((todo) =>
-        todo.id === id ? { ...todo, completed } : todo
-      )
-    );
-  }
-
-  function deleteTodo(id) {
-    setTodos((currentTodos) => currentTodos.filter((todo) => todo.id !== id));
-  }
-
-  function updateSubtasks(todoId, newSubtasks) {
-    setTodos((currentTodos) =>
-      currentTodos.map((todo) =>
-        todo.id === todoId ? { ...todo, subtasks: newSubtasks } : todo
-      )
-    );
-  }
+  const { todos, addTodo, toggleTodo, deleteTodo, updateSubtasks } = useTodoStore();
 
   return (
     <motion.div

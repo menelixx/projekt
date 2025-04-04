@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 export function TodoItem({ completed, id, title, subtasks = [], toggleTodo, deleteTodo, updateSubtasks }) {
   const [newSubtask, setNewSubtask] = useState("");
 
-  const completedSubtasks = subtasks.filter(sub => sub.completed).length;
+  const completedSubtasks = subtasks.filter((sub) => sub.completed).length;
   const progress = subtasks.length > 0 ? Math.round((completedSubtasks / subtasks.length) * 100) : 0;
 
   function handleAddSubtask() {
@@ -15,25 +15,25 @@ export function TodoItem({ completed, id, title, subtasks = [], toggleTodo, dele
   }
 
   function handleToggleSubtask(subId) {
-    const updatedSubtasks = subtasks.map(sub =>
+    const updatedSubtasks = subtasks.map((sub) =>
       sub.id === subId ? { ...sub, completed: !sub.completed } : sub
     );
     updateSubtasks(id, updatedSubtasks);
 
-    const allCompleted = updatedSubtasks.length > 0 && updatedSubtasks.every(sub => sub.completed);
+    const allCompleted = updatedSubtasks.length > 0 && updatedSubtasks.every((sub) => sub.completed);
     toggleTodo(id, allCompleted);
   }
 
   function handleToggleMainTask(e) {
     const newStatus = e.target.checked;
     toggleTodo(id, newStatus);
-    const updatedSubtasks = subtasks.map(sub => ({ ...sub, completed: newStatus }));
+    const updatedSubtasks = subtasks.map((sub) => ({ ...sub, completed: newStatus }));
     updateSubtasks(id, updatedSubtasks);
   }
 
   return (
     <motion.div
-      className="bg-white p-4 rounded-lg shadow-md border border-gray-300"
+      className="bg-white p-4 rounded-lg shadow-md border border-gray-300 max-w-xs w-full"
       whileHover={{ scale: 1.02 }}
       transition={{ type: "spring", stiffness: 200 }}
     >
@@ -72,9 +72,9 @@ export function TodoItem({ completed, id, title, subtasks = [], toggleTodo, dele
         </div>
       )}
 
-      <ul className="mt-2 space-y-1">
+      <ul className="mt-2 space-y-1 max-w-xs">
         {subtasks.map((sub) => (
-          <li key={sub.id} className="flex items-center gap-2">
+          <li key={sub.id} className="flex items-center gap-2 w-full">
             <input
               type="checkbox"
               checked={sub.completed}

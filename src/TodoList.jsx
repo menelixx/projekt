@@ -2,22 +2,17 @@ import { TodoItem } from "./TodoItem";
 import { motion, AnimatePresence } from "framer-motion";
 
 export function TodoList({ todos, toggleTodo, deleteTodo, updateSubtasks }) {
-  const activeTodos = todos.filter(todo => !todo.completed);
-  const completedTodos = todos.filter(todo => todo.completed);
-
   return (
-    <div className="flex gap-6 mt-4">
-      
-      <div className="w-1/2">
-        <h2 className="text-xl font-bold text-gray-800 mb-2">
-          Do zrobienia
-        </h2>
-        <ul className="space-y-2">
-          {activeTodos.length === 0 && (
+    <div className="flex justify-center gap-8 w-full">
+      {/* Lista rzeczy do zrobienia */}
+      <div className="w-full max-w-2xl">
+        <h2 className="text-xl font-bold text-gray-800 mb-3">Do zrobienia</h2>
+        <ul className="mt-4 space-y-2 w-full">
+          {todos.filter(todo => !todo.completed).length === 0 && (
             <p className="text-gray-500 text-center">Brak zadań</p>
           )}
           <AnimatePresence>
-            {activeTodos.map(todo => (
+            {todos.filter(todo => !todo.completed).map((todo) => (
               <motion.div
                 key={todo.id}
                 initial={{ opacity: 0, y: -10 }}
@@ -37,16 +32,15 @@ export function TodoList({ todos, toggleTodo, deleteTodo, updateSubtasks }) {
         </ul>
       </div>
 
-      <div className="w-1/2">
-        <h2 className="text-xl font-bold text-gray-800 mb-2">
-          Zrobione
-        </h2>
-        <ul className="space-y-2">
-          {completedTodos.length === 0 && (
-            <p className="text-gray-500 text-center">Brak zadań</p>
+      {/* Lista ukończonych rzeczy */}
+      <div className="w-full max-w-2xl">
+        <h2 className="text-xl font-bold text-gray-800 mb-3">Zrobione</h2>
+        <ul className="mt-4 space-y-2 w-full">
+          {todos.filter(todo => todo.completed).length === 0 && (
+            <p className="text-gray-500 text-center">Brak ukończonych zadań</p>
           )}
           <AnimatePresence>
-            {completedTodos.map(todo => (
+            {todos.filter(todo => todo.completed).map((todo) => (
               <motion.div
                 key={todo.id}
                 initial={{ opacity: 0, y: -10 }}
